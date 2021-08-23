@@ -1,0 +1,258 @@
+{% extends 'base.html' %}
+{% block content%}
+
+<section class="banner">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-12 title mb30">
+          <h5>Đề xuất</h5>
+        </div>
+        <div class="col-md-12 mb30">
+          <div id="owl-demo">
+            
+            {% for post in object_list|slice:":6"%}
+            <div class="item">
+              <a href="{% url 'detailpost' post.pk %}" class="item_box item_box1">
+                  <img src="{{ post.image.url }}" class="img-responsive img-responsive1">
+                  <div class="item_box_content">
+                      <h6>{{ post.title }}</h6>
+                      <div class="time_and_title">
+                          <span>Lượt xem: {{ post.views }}</span>
+      
+                          <time><i class="fa fa-clock-o"></i> {{ post.date }}</time>
+                      </div>
+                  </div>
+              </a>
+            </div>
+            
+            {% endfor %}
+            
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+   <!--========================= main content ========================-->
+
+   <section class="main_conten">
+    <div class="container">
+      <div class="row">
+
+        <!--=========================content left ========================-->
+        <div class="col-md-6">
+          <div class="row">
+            <!--=============RECENT headline ==============-->
+            <div class="col-md-12 title mb30">
+              <h5>Tin Tức</h5>
+            </div>
+            <!--=============RECENT headline end==============-->
+
+            <!--=============RECENT content==============-->
+
+            {% for post in object_list|slice:":6"  %}
+            {% if forloop.first %}
+            <div class="col-md-12 mb30 toprecent">
+                <a href="{% url 'detailpost' post.pk %}"><img src="{{ post.image.url }}" class="img-responsive"></a>
+            </div>
+            <div class="col-sm-12 pb15 span_and_title">
+                <span class="tag">{{ post.author.first_name}} {{ post.author.last_name }}</span>
+                <time><i class="fa fa-clock-o"></i>{{ post.date }}</time>
+                <span class="comment">
+                  <i class="fa fa-eye"> {{ post.views }}</i>
+                </span>
+            </div>
+            <div class="col-md-12 ">
+                <h4 ><a href="{% url 'detailpost' post.pk %}" style="font-size: 20px; text-align: justify;">{{ post.title }}</a></h4>
+                <div class="baiviet">
+                  <p style="text-align:justify">{{ post.body|safe }}</p>
+                </div>
+                
+  
+                <div class="angkor">
+                    <a href="{% url 'detailpost' post.pk %}">Xem thêm</a>
+                    <div class="social share"><i class="fa fa-share-alt"></i> Chia sẻ
+                      <ul>
+                        <li><a href="#"><i class="icon fa fa-facebook-square"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
+                        <li><a href="#"><i class="fa fa-pinterest-square"></i></a></li>
+                      </ul>
+                    </div>
+                  </div>
+              </div>
+            {%  else  %}
+            <!--====== hr ======-->
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                </div>
+            </div>
+        <!--====== hr end ======-->
+        
+        <!--=========== sub content left section ===========-->
+        
+        <div class="row">
+            <div class="col-md-6 pb15 baiviet1">
+                <a href="{% url 'detailpost' post.pk %}"><img src="{{ post.image.url }}" class="img-responsive"></a>
+            </div>
+        
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-sm-12 pb15 span_and_title">
+                        <span class="tag">{{ post.author.first_name}} {{ post.author.last_name }}</span>
+                          <time><i class="fa fa-clock-o"></i>{{ post.date }}</time>
+                          <span class="comment luotxem">
+                          <i class="fa fa-eye"> {{ post.views }}</i>
+                        </span>
+        
+                    </div>
+                </div>
+                <h4><a href="{% url 'detailpost' post.pk %}" style="font-size: 16px; text-align: justify;">{{ post.title }}</a></h4>
+                <div class="baiviet2"><p style="text-align:justify">{{ post.body|safe }}</p></div>
+                
+        
+        
+                <div class="angkor">
+                    <a href="{% url 'detailpost' post.pk %}">Xem thêm</a>
+                    <div class="social share"><i class="fa fa-share-alt"></i> Chia sẻ
+                        <ul>
+                            <li><a href="#"><i class="icon fa fa-facebook-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-pinterest-square"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--===========sub content left section end ===========-->
+            {% endif %}
+            {% endfor %}
+
+            <!--=============RECENT content end==============-->
+
+          </div>
+
+        </div>
+        <!--=========================content left end ========================-->
+
+        <!--=========================content middle ========================-->
+
+        <div class="col-md-3">
+
+          <!--=============TECHNOLOGY ==============-->
+          <div class="row">
+            <div class="col-md-12 title mb30">
+              <h5>Danh sách</h5>
+            </div>
+
+            <div class="col-md-12 mb30">
+              <div class="tecnology">
+                {% for post in object_list|slice:":10" %}
+                  {% if forloop.first %}
+                    <div class="content_box">
+                      <span>
+                        <i class="fa fa-clock-o"></i> {{ post.date}} - New
+                      </span>
+                      <h6><a href="{% url 'detailpost' post.pk %}">{{ post.title }}</a></h6>
+                    </div>
+                  {%  else  %}
+                  <hr>
+                  <div class="content_box">
+                    <span>
+                      <i class="fa fa-clock-o"></i> {{ post.date}} 
+                    </span>
+                    <h6><a href="{% url 'detailpost' post.pk %}">{{ post.title }}</a></h6>
+                  </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <!--=============TECHNOLOGY end ==============-->
+
+        </div>
+
+        <!--=========================content middle end ========================-->
+
+
+
+        <!--========================= content right ========================-->
+
+        <div class="col-md-3">
+
+          <!--=============FOLLOW ==============-->
+
+          <div class="row">
+            <div class="col-md-12 title mb30">
+              <h5>FOLLOW ME!
+              </h5>
+            </div>
+
+            <div class="col-md-12 mb30">
+              <div class="icon_box">
+
+                <a href="#" class="twitter" target="_blank">
+                  <i class="fa fa-twitter"></i>
+                  <p>Twitter<span>Follow me!</span></p>
+                </a>
+
+                <a href="#" class="facebook" target="_blank">
+                  <i class="fa fa-facebook"></i>
+                  <p>Facebook<span>LIKE!</span></p>
+                </a>
+
+                <a href="#" class="dribbble" target="_blank">
+                  <i class="fa fa-dribbble"></i>
+                  <p>Dribbble<span>OUR CHANNEL!</span></p>
+                </a>
+
+                <a href="#" class="custom" target="_blank" style="background: #C7C5B3;">
+                  <i class="fa fa-instagram"></i>
+                  <p>Instagram<span>See more photos!</span></p>
+                </a>
+
+                <a href="#" class="rss" target="_blank">
+                  <i class="fa fa-rss"></i>
+                  <p>RSS<span>Get our latest news!</span></p>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!--=============FOLLOW end ==============-->
+         
+          <!--==========ABOUT newstoday==========-->
+         
+          <div class="row">
+            <div class="col-md-12 title mb30">
+              <h5>Tin mới hôm nay</h5>
+            </div>
+
+              {% for post in object_list|slice:":1"  %}
+               
+                  <div class="col-md-12 mb30">
+                    <img src="{{ post.image.url }}" class="img-responsive">
+                  </div>
+                  <div class="col-md-12 mb30 baiviet2">
+                    <p style="text-align:justify">{{ post.body|safe }}</p>
+                  </div>
+              {% endfor %}
+            
+          </div>
+
+          <!--========ABOUT newstoday end ========-->
+
+        <!--========================= content end ========================-->
+
+      </div>
+    </div>
+    </div>
+  </section>
+  <!--========================= main content  end========================-->
+
+
+
+
+{% endblock %}

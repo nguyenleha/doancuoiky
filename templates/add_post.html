@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mainprofile row">
+   <h2 style="margin-bottom: 50px;">Thêm bài viết</h2>
+   <div class="col-md-12 editprofile">
+      <form method="post" enctype="multipart/form-data">
+         {%  csrf_token %}
+          <div class="form-group">
+             {{ form.media }}
+             {{ form.as_p }}
+      </div>
+         <div class="text-right">
+            <input type="button" style=" border-radius: 5px;" class="btn btn-danger mt-3" value="Thoát"
+            onclick="location.href='/'"/>
+            <button type="submit" style="margin-left: 20px; border-radius: 5px;" class="btn btn-primary mt-3">Thêm bài viết</button>
+         </div>
+          
+      </form>
+       <br>
+   </div>
+</div>
+         
+{% endblock %}

@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+       <!--========================= main content ========================-->
+    
+       <section class="main_content" style="margin-top: 50px;">
+        <h1 id>{{ post.title }}</h1>
+        <div> <small>Viết bởi: </small> <b>{{ post.author.first_name}} {{ post.author.last_name }}</b> </div>
+        <small>Đăng vào ngày: {{ post.date }}</small><br> 
+        <form method="POST" action="{% url 'deletepost' post.pk %}" onsubmit="return confirm('Are you sure ?');">
+            {% csrf_token %}
+            
+            {% if user.is_authenticated %}
+                {% if post.author.id == user.id %}
+                    <input class="btn btn-primary mt-3" style="margin-right: 20px; border-radius: 5px;" type="button"
+                           onclick="location.href=`{% url 'updatepost' post.pk %}`" value="Sửa"/>
+                    <button type="submit"  style=" border-radius: 5px;" class="btn btn-danger mt-3">Xóa</button>
+                {% endif %}
+            {% endif %}
+        </form>
+        
+        
+        <div class="container">
+            <div class="row">
+    
+            <!--=========================content left ========================-->
+            <div class="col-md-9">
+              <div class="row">
+                  
+                <!--=============RECENT headline ==============-->
+                
+                <div class="col-md-12 title mb30 maindetail">
+                   
+                    <p style="font-size: 18px; text-align:justify">{{ post.body|safe }}</p>
+                </div>
+           
+              </div>
+            </div>
+            <!--=========================content left end ========================-->
+    
+            <!--=========================content middle ========================-->
+    
+            <div class="col-md-3">
+    
+              <!--=============TECHNOLOGY ==============-->
+              <div class="row">
+                <div class="col-md-12 title mb30">
+                  <h5>Danh sách báo mới</h5>
+                </div>
+    
+                <div class="col-md-12 mb30">
+                  <div class="tecnology">
+                    {% for posts in other_posts|slice:":10" %}
+                      {% if forloop.first %}
+                        <div class="content_box">
+                          <span>
+                            <i class="fa fa-clock-o"></i> {{ posts.date}} - Mới
+                          </span>
+                          <h6><a href="{% url 'detailpost' posts.pk %}">{{ posts.title }}</a></h6>
+                        </div>
+                      {%  else  %}
+                      <hr>
+                      <div class="content_box">
+                        <span>
+                          <i class="fa fa-clock-o"></i> {{ posts.date}} 
+                        </span>
+                        <h6><a href="{% url 'detailpost' posts.pk %}">{{ posts.title }}</a></h6>
+                      </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <!--=============TECHNOLOGY end ==============-->
+    
+            </div>
+    
+            <!--=========================content middle end ========================-->
+            
+            </div>
+            <div class="row">
+              <div class="col-md-9">
+                <h3>Bình luận</h3>
+                {% if user.is_authenticated %}
+                <form method="post" enctype="multipart/form-data" action="{% url 'addcomment' post.pk %}">
+                  {% csrf_token %}
+
+                  <textarea rows="3" name="body" required id="id_body" class="cmt" placeholder="Bình luận của bạn"></textarea>
+                  <button type="submit" class="btn btn-success mx-1" style="float: right; margin-top:10px; border-radius:5px">Gửi</button>
+                  <input type="text" name="name" required class="tencmt" id="id_name" value=" {{ user.first_name }} {{ user.last_name }}" readonly>
+                  <div class="hrrr"></div>
+                </form>
+
+
+
+
+
+
+
+
+                
+
+
+
+
+
+
+
+
+                {% else %}
+                  <a style="font-size: 20px; margin: 20px 0px;" href="{% url 'login' %}">Đăng nhập </a>
+                {% endif %}
+                
+                {% if not post.comments.all %}
+                <br>
+                
+                <h5>Chưa có bình luận...</h5><br>
+                {% else %}
+                {% for cmt in post.comments.all %}
+                <div class="phancmt">
+                  <h5>{{ cmt.name }} <small> - {{ cmt.date_added }}</small></h5>
+                  <div class="deleteee">
+                      {% if cmt.author.id == user.id %}
+                      <form method="post" enctype="multipart/form-data" action="{% url 'delcomment' cmt.pk %}" onsubmit="return confirm('Are you sure ?');">
+                      {% csrf_token %}
+                      
+
+                      
+                          <button type="submit"><i class="fa fa-trash"></i></button>
+                       
+
+
+
+
+                      </form>
+                      {% else %}
+                      
+                      {% endif %}
+                  </div>
+                  
+                  <p style="font-size: 15px">{{ cmt.body }}</p>
+                </div>
+                
+                
+                  
+
+
+                {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+     
+
+
+        </div>
+      </section>
+{% endblock %}

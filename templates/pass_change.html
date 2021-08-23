@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="centerllogin changepw">
+    <div class="headerlogin">Đổi mật khẩu</div>
+    <form method="post" onsubmit="return confirm('Are you sure ?')">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <input type="button" class="btn btn-danger " value="Thoát"
+                           onclick="window.history.back()"/>
+        <input type="submit" value="Đổi mật khẩu">
+       
+        
+    </form>
+</div>
+{% endblock %}
+

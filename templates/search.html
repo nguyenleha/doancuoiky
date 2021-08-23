@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    {% if not search_content.all  %}
+        <h1 style="margin-top: 50px;">Tìm kiếm cho "{{ searched }}"</h1>
+        <h2>Không tìm thấy</h2>
+        {% else %}
+        <h1 style="margin-top: 50px;">Tìm kiếm cho "{{ searched }}"</h1><br><br>
+        {% for content in search_content %}
+     
+        <div class="timkiem">
+            <a href="{% url 'detailpost' content.pk %}"><h3 style="display: block;">{{ content.title }}</h3></a>
+            <span class="tag">{{ content.author.first_name}} {{ content.author.last_name }}</span>
+                <time><i class="fa fa-clock-o"></i>{{ content.date }}</time>
+
+            <div>
+              <p>{{ content.body|safe }}</p>
+            </div>
+        </div>
+     
+        
+      
+        {% endfor %}
+    {% endif %}
+  
+    
+
+{% endblock %}
