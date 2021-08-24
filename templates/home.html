@@ -18,7 +18,7 @@
                   <div class="item_box_content">
                       <h6>{{ post.title }}</h6>
                       <div class="time_and_title">
-                          <span>Lượt xem: {{ post.views }}</span>
+                          <span>{{ post.author.first_name}} {{ post.author.last_name }}</span>
       
                           <time><i class="fa fa-clock-o"></i> {{ post.date }}</time>
                       </div>
@@ -60,9 +60,7 @@
             <div class="col-sm-12 pb15 span_and_title">
                 <span class="tag">{{ post.author.first_name}} {{ post.author.last_name }}</span>
                 <time><i class="fa fa-clock-o"></i>{{ post.date }}</time>
-                <span class="comment">
-                  <i class="fa fa-eye"> {{ post.views }}</i>
-                </span>
+               
             </div>
             <div class="col-md-12 ">
                 <h4 ><a href="{% url 'detailpost' post.pk %}" style="font-size: 20px; text-align: justify;">{{ post.title }}</a></h4>
@@ -103,9 +101,7 @@
                     <div class="col-sm-12 pb15 span_and_title">
                         <span class="tag">{{ post.author.first_name}} {{ post.author.last_name }}</span>
                           <time><i class="fa fa-clock-o"></i>{{ post.date }}</time>
-                          <span class="comment luotxem">
-                          <i class="fa fa-eye"> {{ post.views }}</i>
-                        </span>
+                         
         
                     </div>
                 </div>
