@@ -1,9 +1,6 @@
 # news_application
 Web application about news and recommend news
 
-# news_application
-Web application about news and recommend news
-
 version: "3.9"
 
 services:
