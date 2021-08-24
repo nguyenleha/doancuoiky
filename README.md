@@ -1,2 +1,30 @@
 # news_application
 Web application about news and recommend news
+
+# news_application
+Web application about news and recommend news
+
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+
+  web:
+    build: .
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py loaddata fixtures/* && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/usr/src/NEWS_WEBAPP/
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    restart: always
